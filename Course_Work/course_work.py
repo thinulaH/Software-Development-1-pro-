@@ -4,9 +4,9 @@ want_to_continue = 'y'
 
 while want_to_continue == 'y' :
     try:
-        cred_pass  = int(input('Please enter your credits at pass: '))
+        cred_pass  = int(input('Please enter your credits at pass : '))
         cred_defer = int(input('Please enter your credits at defer: '))
-        cred_fail  = int(input('Please enter your credits at fail: '))
+        cred_fail  = int(input('Please enter your credits at fail : '))
     except ValueError :
         print('Integer required')
         break
@@ -17,7 +17,7 @@ while want_to_continue == 'y' :
         prog_out = 'Progress'
     if cred_pass == 100 :
         prog_out = 'Progress (module trailer)'
-    if cred_pass in(80,60)
+    if cred_pass in(80,60) :
         prog_out = 'Do not Progress - module retriever'
     if cred_pass == 40 :
         if cred_defer == 0 :
