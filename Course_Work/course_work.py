@@ -37,5 +37,6 @@ while want_to_continue == 'y' :
     print(prog_out)
     print('Would you like to enter another set of data?')
     want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")
-
+if want_to_continue == 'q' :
+    print("quiting ...")
     
