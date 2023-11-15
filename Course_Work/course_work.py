@@ -22,7 +22,7 @@ def graph_col_text(place) :
 
 def rectangle(place,height_rec) :
     r, g, b = graph_col_text(place)
-    x1,x2 = (80+(place*100)), (175+(place*100))
+    x1,x2 = (80+(place*110)), (175+(place*110))
     y1 = 500
     y2 = y1 - (80*height_rec)
     rectangle1 = Rectangle(Point(x1,y1),Point(x2,(y2)))
@@ -45,7 +45,7 @@ def subTitle():
     x = (x1+x2)/2
     y = y1 + 20
     sub_t_histo = Text(Point(x,y),sub_title)
-    sub_t_histo.setSize(20)
+    sub_t_histo.setSize(15)
     sub_t_histo.draw(Win)
 
 
@@ -110,9 +110,9 @@ while want_to_continue == 'y' :
     want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")
 
 if want_to_continue == 'q' :
-    Win = GraphWin("histogram", 800, 600)
+    Win = GraphWin("histogram", 805, 600)
     Win.setBackground(color_rgb(237,242,236))
-    linex = Line(Point(80,500),Point(720,500))
+    linex = Line(Point(150,500),Point(650,500))
     title()
     for height_rec in (pro_count,pro_m_count,dnp_count,excl_count) :
         graph_col_text(place)
