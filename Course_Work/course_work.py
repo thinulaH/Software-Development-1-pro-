@@ -18,6 +18,8 @@ def graph_col_text(place) :
         r,g,b, = "232","145","155"
     return r, g ,b 
 
+    
+
 def rectangle(place,height_rec) :
     r, g, b = graph_col_text(place)
     x1,x2 = (80+(place*100)), (175+(place*100))
@@ -28,6 +30,7 @@ def rectangle(place,height_rec) :
     rectangle1.setOutline(color= "Black" )
     rectangle1.setWidth(1)
     rectangle1.draw(Win)
+    return x1 , x2 ,y1
 
 
 def title() :
@@ -36,6 +39,15 @@ def title() :
     title_histo.setTextColor(color_rgb(103,103,103))
     title_histo.setStyle("bold")
     title_histo.draw(Win)
+
+def subTitle():
+    x1, x2 , y1 = rectangle(place,height_rec)
+    x = (x1+x2)/2
+    y = y1 + 20
+    sub_t_histo = Text(Point(x,y),sub_title)
+    sub_t_histo.setSize(20)
+    sub_t_histo.draw(Win)
+
 
 
 pro_count = 0
@@ -47,7 +59,10 @@ pro_m_count = 0
 excl_count = 0
 #excl_count = exclude count
 height_rec = 0 
+tot_outcomes = 0
+#tot_outcomes = total outcomes
 place = 1 
+sub_titles = ["Progress","Trailer","Retriver","Excluded"]
 
 while want_to_continue == 'y' :
     try:
@@ -101,12 +116,17 @@ if want_to_continue == 'q' :
     title()
     for height_rec in (pro_count,pro_m_count,dnp_count,excl_count) :
         graph_col_text(place)
+        sub_title = sub_titles[place-1]
         rectangle(place,height_rec)
+        subTitle()
         place = place + 1
+    
+
+    tot_outcomes = pro_count + pro_m_count + dnp_count + excl_count
+    
     linex.draw(Win)
     Win.getMouse()
     Win.close()
-
 
 
     
