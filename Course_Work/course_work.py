@@ -2,12 +2,33 @@ from graphics import *
 
 want_to_continue = 'y'
 
-def rectangle() :
-    rectangle1 = Rectangle(Point((80+(place*100)),500),Point(150+(place*100),(500-(80*height_rec))))
-    rectangle1.setFill(color_rgb(107,100,120))
-    rectangle1.setOutline(color="Black")
-    rectangle1.setWidth(3)
+
+def graph_col_text(place) :
+    if place == 1:
+        sub_title = "Progresss"
+        r,g,b = "169","150","180"
+    elif place == 2:
+        sub_title = "Trailer"
+        r,g,b = "184","217","180"
+    elif place == 3 :
+        sub_title = "Retriver"
+        r,g,b = '132','171','180'
+    elif place == 4 :
+        sub_title = "Excluded"
+        r,g,b, = "232","145","155"
+    return r, g ,b 
+
+def rectangle(place,height_rec) :
+    r, g, b = graph_col_text(place)
+    x1,x2 = (80+(place*100)), (175+(place*100))
+    y1 = 500
+    y2 = y1 - (80*height_rec)
+    rectangle1 = Rectangle(Point(x1,y1),Point(x2,(y2)))
+    rectangle1.setFill(color_rgb(int(r),int(g),int(b)))
+    rectangle1.setOutline(color= "Black" )
+    rectangle1.setWidth(1)
     rectangle1.draw(Win)
+
 
 def title() :
     title_histo = Text(Point(220,40),"Histogram Results")
@@ -15,6 +36,7 @@ def title() :
     title_histo.setTextColor(color_rgb(103,103,103))
     title_histo.setStyle("bold")
     title_histo.draw(Win)
+
 
 pro_count = 0
 #pro_count = progress count
@@ -25,7 +47,6 @@ pro_m_count = 0
 excl_count = 0
 #excl_count = exclude count
 height_rec = 0 
-col_num = 0
 place = 1 
 
 while want_to_continue == 'y' :
@@ -72,16 +93,15 @@ while want_to_continue == 'y' :
     print(prog_out)
     print('Would you like to enter another set of data?')
     want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")
+
 if want_to_continue == 'q' :
-    print("quiting ...")
     Win = GraphWin("histogram", 800, 600)
     Win.setBackground(color_rgb(237,242,236))
     linex = Line(Point(80,500),Point(720,500))
     title()
-    for col_num in (pro_count,pro_m_count,excl_count,dnp_count) :
-        height_rec = col_num
-        print(height_rec)
-        rectangle()
+    for height_rec in (pro_count,pro_m_count,dnp_count,excl_count) :
+        graph_col_text(place)
+        rectangle(place,height_rec)
         place = place + 1
     linex.draw(Win)
     Win.getMouse()
