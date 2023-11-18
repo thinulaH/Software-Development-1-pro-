@@ -64,7 +64,7 @@ def subTitle():
     sub_t_histo.setSize(20)
     sub_t_histo.setTextColor(color_rgb(120,120,120))
     sub_t_histo.draw(Win)
-    num_count = Text(Point(x,y2-10),(height_rec*n))
+    num_count = Text(Point(x,y2-10),(int(height_rec*n)))
     num_count.setSize(18)
     num_count.setTextColor(color_rgb(150,150,150))
     num_count.draw(Win)
