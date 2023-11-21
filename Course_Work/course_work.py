@@ -13,6 +13,7 @@ def input_cred(cred_name) :
         except ValueError:
             print('Integer required')
 
+
 #column colours
 def col_colours(place) :
     if place == 1:
@@ -29,8 +30,10 @@ def col_colours(place) :
 def col_height(pro_count,pro_m_count,dnp_count,excl_count) :
     if (11 > pro_count > 5) or (11 > pro_m_count > 5) or (11 > dnp_count > 5) or (11 > excl_count > 5) :
         n = 2
-    elif pro_count > 10 or pro_m_count > 10 or dnp_count > 10 or excl_count > 10 :
+    elif 16>pro_count > 10 or 16>pro_m_count > 10 or 16>dnp_count > 10 or 16>excl_count > 10 :
         n = 4
+    elif pro_count >15 and pro_m_count >15 and dnp_count >15 and excl_count >15 :
+        n = 5
     elif pro_count < 3 and pro_m_count < 3 and dnp_count < 3 and excl_count < 3 :
         n = 1/2
     else :
@@ -100,45 +103,28 @@ want_to_continue = 'y'
 
 while want_to_continue == 'y' :
     while True :
-        cred_pass  = int(input_cred('pass'))
+        cred_pass  = int(input_cred('pass '))
         cred_defer = int(input_cred('defer'))
-        cred_fail  = int(input_cred('fail'))
+        cred_fail  = int(input_cred('fail '))
         Total = cred_defer+cred_fail+cred_pass
         if Total == 120:
             break
         else :
             print('Total incorrect. ')
 
-    if cred_pass == 120 :
+    if cred_pass == 120:
         prog_out = 'Progress'
         pro_count += 1
-    elif cred_pass == 100 :
+    if cred_pass == 100:
         prog_out = 'Progress (module trailer)'
         pro_m_count += 1
-    elif cred_pass in(80,60) :
-        prog_out = 'Do not Progress - module retriever'
-        dnp_count += 1 
-    elif cred_pass == 40 :
-        if cred_defer == 0 :
-            prog_out = 'Exclude'
-            excl_count += 1
-        else :
-            prog_out = 'Do not Progress - module retriever'
-            dnp_count += 1
-    elif cred_pass == 20 :
-        if cred_defer in(0,20) :
-            prog_out = 'Exclude'
-            excl_count += 1
-        else :
-            prog_out = 'Do not progress - module retriever'
-            dnp_count += 1
-    elif cred_pass == 0 :
-        if cred_defer in(60,80,100,120):
-            prog_out = 'Do not progress - module retriever'
-            dnp_count += 1
-        else :
-            prog_out = 'Exclude'
-            excl_count += 1
+    if (cred_pass in [80,60]) or (cred_pass==40 and (cred_defer in [80,60,40,20])) or (cred_pass ==20 and cred_defer in[100,80,60,40]) or (cred_pass == 0 and cred_defer in [120,100,80,60]):
+        prog_out = 'Do not progress - module retriever'
+        dnp_count += 1
+    if (cred_pass==40 and cred_defer==0) or (cred_pass==20 and cred_defer in [0,20]) or (cred_pass==0 and cred_defer in [0,20,40]):
+        prog_out = 'Exclude'
+        excl_count += 1
+
     print(prog_out)
     print('Would you like to enter another set of data?')
     want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")
@@ -164,3 +150,6 @@ if want_to_continue == 'q' :
     linex.draw(Win)
     Win.getMouse()
     Win.close()
+
+
+
