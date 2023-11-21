@@ -1,16 +1,18 @@
-from graphics import *
-win = GraphWin("chart", 800, 600)
-linex = Line(Point(200,450),Point(600,450))
-liney = Line(Point(200,450),Point(200,100))
-j = ['Malli','Akki','Ammi','Thaththi']
-x = 0
-for i in ["thinula","inuri","Pushpa","Ranjith"]:
-    print(x)
-    print(j[x], i)
-    x = x + 1
+credits = [0,20,40,60,80,100,120]
 
-linex.draw(win)
-liney.draw(win)
+cred_names = [cred_pass,cred_defer,cred_fail]
+cred_pass,cred_defer,cred_fail= 0,0,0
+def get_input(cred_names,credits):
+    cred_name  = int(input('Please enter your credits at pass : '))
+    while cred_name not in credits:
+        print('Out of range')
+        cred_name = int(input('Please enter your credits at pass : '))
+    return cred_name
 
-win.getMouse() # pause for click in window
-win.close()
+        
+
+for cred_name in cred_names:
+    get_input(cred_names,credits)
+    print(cred_name)
+    print(cred_pass)
+    
