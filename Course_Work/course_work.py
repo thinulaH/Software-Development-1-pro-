@@ -1,5 +1,18 @@
 from graphics import *
 
+
+#Input value and checking wether in range or adding an integer
+def input_cred(cred_name) :
+    while True:
+        try:
+            credit_value = int(input(f"Please enter your credits at {cred_name}: "))
+            if credit_value in [0,20,40,60,80,100,120]:
+                return credit_value 
+            else:
+                print("Out of range.")
+        except ValueError:
+            print('Integer required')
+
 #column colours
 def col_colours(place) :
     if place == 1:
@@ -83,30 +96,19 @@ tot_outcomes = 0
 place = 1 
 sub_titles = ["Progress","Trailer","Retriver","Excluded"]
 want_to_continue = 'y'
-credits = [0,20,40,60,80,100,120]
+#credits = [0,20,40,60,80,100,120]
 
 while want_to_continue == 'y' :
-    while True:
-        try:
-            cred_pass  = int(input('Please enter your credits at pass : '))
-            while cred_pass not in credits:
-                print('Out of range')
-                cred_pass = int(input('Please enter your credits at pass : '))
-            cred_defer = int(input('Please enter your credits at defer: '))
-            while cred_defer not in credits:
-                print('Out of range')
-                cred_pass = int(input('Please enter your credits at defer : '))
-            cred_fail  = int(input('Please enter your credits at fail : '))
-            while cred_fail not in credits:
-                print('Out of range')
-                cred_fail = int(input('Please enter your credits at fail : '))
+    while True :
+        cred_pass  = int(input_cred('pass'))
+        cred_defer = int(input_cred('defer'))
+        cred_fail  = int(input_cred('fail'))
+        Total = cred_defer+cred_fail+cred_pass
+        if Total == 120:
             break
-        except ValueError :
-            print('Integer required')
-        
-    if (cred_defer + cred_pass + cred_fail) != 120 :
-        print('Total incorrect. ')
-    
+        else :
+            print('Total incorrect. ')
+
     if cred_pass == 120 :
         prog_out = 'Progress'
         pro_count += 1
@@ -162,4 +164,3 @@ if want_to_continue == 'q' :
     linex.draw(Win)
     Win.getMouse()
     Win.close()
-    #adding mac branch to git
