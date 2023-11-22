@@ -2,11 +2,11 @@ from graphics import *
 
 
 #Input value and checking wether in range or adding an integer
-def input_cred(cred_name) :
+def input_cred(cred_name,credits) :
     while True:
         try:
             credit_value = int(input(f"Please enter your credits at {cred_name}: "))
-            if credit_value in [0,20,40,60,80,100,120]:
+            if credit_value in credits:
                 return credit_value 
             else:
                 print("Out of range.")
@@ -28,12 +28,12 @@ def col_colours(place) :
 
 #column height adjestment
 def col_height(pro_count,pro_m_count,dnp_count,excl_count) :
-    if (11 > pro_count > 5) or (11 > pro_m_count > 5) or (11 > dnp_count > 5) or (11 > excl_count > 5) :
-        n = 2
-    elif 16>pro_count > 10 or 16>pro_m_count > 10 or 16>dnp_count > 10 or 16>excl_count > 10 :
-        n = 4
-    elif pro_count >15 and pro_m_count >15 and dnp_count >15 and excl_count >15 :
+    if pro_count >15 or pro_m_count >15 or dnp_count >15 or excl_count >15 :
         n = 5
+    elif (16 > pro_count > 10) or (16 > pro_m_count > 10) or (16 > dnp_count > 10) or (16 > excl_count > 10) :
+        n = 4
+    elif (11 > pro_count > 5) or (11 > pro_m_count > 5) or (11 > dnp_count > 5) or (11 > excl_count > 5) :
+        n = 2
     elif pro_count < 3 and pro_m_count < 3 and dnp_count < 3 and excl_count < 3 :
         n = 1/2
     else :
@@ -99,13 +99,13 @@ tot_outcomes = 0
 place = 1 
 sub_titles = ["Progress","Trailer","Retriver","Excluded"]
 want_to_continue = 'y'
-#credits = [0,20,40,60,80,100,120]
+credits = [0,20,40,60,80,100,120]
 
 while want_to_continue == 'y' :
     while True :
-        cred_pass  = int(input_cred('pass '))
-        cred_defer = int(input_cred('defer'))
-        cred_fail  = int(input_cred('fail '))
+        cred_pass  = int(input_cred('pass ',credits))
+        cred_defer = int(input_cred('defer',credits))
+        cred_fail  = int(input_cred('fail ',credits))
         Total = cred_defer+cred_fail+cred_pass
         if Total == 120:
             break
@@ -121,13 +121,17 @@ while want_to_continue == 'y' :
     if (cred_pass in [80,60]) or (cred_pass==40 and (cred_defer in [80,60,40,20])) or (cred_pass ==20 and cred_defer in[100,80,60,40]) or (cred_pass == 0 and cred_defer in [120,100,80,60]):
         prog_out = 'Do not progress - module retriever'
         dnp_count += 1
-    if (cred_pass==40 and cred_defer==0) or (cred_pass==20 and cred_defer in [0,20]) or (cred_pass==0 and cred_defer in [0,20,40]):
+    if (cred_fail in [80,100,120]):
         prog_out = 'Exclude'
         excl_count += 1
 
     print(prog_out)
+    print()
     print('Would you like to enter another set of data?')
     want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")
+    while want_to_continue not in ['y','q']:
+        want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")   
+    print()
 
 if want_to_continue == 'q' :
     Win = GraphWin("histogram", 805, 600)
