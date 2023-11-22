@@ -103,14 +103,37 @@ credits = [0,20,40,60,80,100,120]
 
 while want_to_continue == 'y' :
     while True :
-        cred_pass  = int(input_cred('pass ',credits))
-        cred_defer = int(input_cred('defer',credits))
-        cred_fail  = int(input_cred('fail ',credits))
+        cred_pass  = int(input_cred('PASS ',credits))
+        cred_defer = int(input_cred('DEFER',credits))
+        cred_fail  = int(input_cred('FAIL ',credits))
         Total = cred_defer+cred_fail+cred_pass
         if Total == 120:
             break
-        else :
-            print('Total incorrect. ')
+        else:
+            while Total != 120:
+                print('Total incorrect. ')
+                change = input("Do you want to change one credit (Enter 'c') or all (Enter 'a') ?  ")
+                if change == 'a':
+                    cred_pass  = int(input_cred('PASS ',credits))
+                    cred_defer = int(input_cred('DEFER',credits))
+                    cred_fail  = int(input_cred('FAIL ',credits))
+
+                elif change == 'c':
+                    print("For change \n    PASS credits  - 'p'\n    DEFER credits - 'd'\n    FAIL credits  - 'f' ")
+                    change_cred = input("What input do you want to change ? :")
+                    if change_cred == 'p':
+                        cred_pass  = int(input_cred('PASS ',credits))
+                    elif change_cred == 'd':
+                        cred_defer = cred_defer = int(input_cred('DEFER',credits))
+                    elif change_cred == 'f':
+                        cred_fail  = int(input_cred('FAIL ',credits))
+                Total = cred_defer+cred_fail+cred_pass
+                if Total == 120:
+                    break
+            break
+
+                
+
 
     if cred_pass == 120:
         prog_out = 'Progress'
