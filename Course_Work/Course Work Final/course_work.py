@@ -15,36 +15,44 @@ def input_cred(cred_name,credits) :
 #column colours
 def col_colours(place) :
     if place == 1:
-        r,g,b = 169,150,180
-    elif place == 2 :
-        r,g,b = 184,217,180
+        r,g,b = "169","150","180"
+    elif place == 2:
+        r,g,b = "184","217","180"
     elif place == 3 :
-        r,g,b = 132,171,180
+        r,g,b = '132','171','180'
     elif place == 4 :
-        r,g,b, = 232,145,155
-    return r,g,b 
+        r,g,b, = "232","145","155"
+    return r, g ,b 
 
 #column height adjestment
 def col_height(pro_count,pro_m_count,dnp_count,excl_count) :
-    vals = [pro_count,pro_m_count,dnp_count,excl_count]
-    n = 1
-    while any(val*80/n > 400 for val in vals ) :
-            n += 0.2
-    #https://www.programiz.com/python-programming/methods/built-in/any (any() function: works similar as 'or')
-    return n
+    if pro_count >15 or pro_m_count >15 or dnp_count >15 or excl_count >15 :
+        n = 5
+    elif (16 > pro_count > 10) or (16 > pro_m_count > 10) or (16 > dnp_count > 10) or (16 > excl_count > 10) :
+        n = 4
+    elif (11 > pro_count > 5) or (11 > pro_m_count > 5) or (11 > dnp_count > 5) or (11 > excl_count > 5) :
+        n = 2
+    elif pro_count < 3 and pro_m_count < 3 and dnp_count < 3 and excl_count < 3 :
+        n = 1/2
+    else :
+        n = 1
+    pro_count1 = pro_count/(n)
+    pro_m_count1 = pro_m_count/(n)
+    dnp_count1 = dnp_count/(n)
+    return pro_count1,pro_m_count1,dnp_count1,n
  
 #making columns
 def rectangle(place,height_rec) :
     r, g, b = col_colours(place)
     x1,x2 = (80+(place*110)), (175+(place*110))
     y1 = 500
-    y2 = y1 - (80*(height_rec/n))
+    y2 = y1 - (80*(height_rec))
     rectangle1 = Rectangle(Point(x1,y1),Point(x2,y2))
-    rectangle1.setFill(color_rgb(r,g,b))
+    rectangle1.setFill(color_rgb(int(r),int(g),int(b)))
     rectangle1.setOutline(color= "Black" )
     rectangle1.setWidth(1)
     rectangle1.draw(Win)
-    return x1,x2,y1,y2
+    return x1 , x2 ,y1 
 
 #main title in paragraph
 def title() :
@@ -52,32 +60,41 @@ def title() :
     title_histo.setSize(35)
     title_histo.setTextColor(color_rgb(103,103,103))
     title_histo.setStyle("bold")
+    title_histo.draw(Win)
     total_txt = Text(Point(150,570),total)
     total_txt.setTextColor(color_rgb(36,36,36))
     total_txt.setSize(25)
     total_txt.draw(Win)
-    title_histo.draw(Win)
 
 #column names
 def subTitle():
-    x1,x2,y1,y2 = rectangle(place,height_rec)
+    x1, x2 , y1 = rectangle(place,height_rec)
     x = (x1+x2)/2
+    y2 = y1 - (80*(height_rec))
     y = y1 + 20
     sub_t_histo = Text(Point(x,y),sub_title)
     sub_t_histo.setSize(20)
     sub_t_histo.setTextColor(color_rgb(120,120,120))
-    num_count = Text(Point(x,y2-10),(int(height_rec)))
+    sub_t_histo.draw(Win)
+    num_count = Text(Point(x,y2-10),(int(height_rec*n)))
     num_count.setSize(18)
     num_count.setTextColor(color_rgb(150,150,150))
-    sub_t_histo.draw(Win)
     num_count.draw(Win)
-    
-pro_count,pro_m_count,dnp_count,excl_count = 0,0,0,0
+
+pro_count = 0
+#pro_count = progress count
+dnp_count = 0
+#dnp_count = do not progress - module retriver count
+pro_m_count = 0
+#pro_m_count = progress (module trailer)
+excl_count = 0
+#excl_count = exclude count
 height_rec = 0 
 tot_outcomes = 0
+#tot_outcomes = total outcomes
 place = 1 
-want_to_continue = 'y'
 sub_titles = ["Progress","Trailer","Retriver","Excluded"]
+want_to_continue = 'y'
 credits = [0,20,40,60,80,100,120]
 
 while want_to_continue == 'y' :
@@ -124,7 +141,8 @@ while want_to_continue == 'y' :
         prog_out = 'Exclude'
         excl_count += 1
 
-    print(prog_out,'\n')
+    print(prog_out)
+    print()
     print('Would you like to enter another set of data?')
     want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")
     while want_to_continue not in ['y','q']:
@@ -139,11 +157,12 @@ if want_to_continue == 'q' :
     total = str(tot_outcomes)+" outcomes in total."
     title()
     col_height(pro_count,pro_m_count,dnp_count,excl_count)
+    pro_count1,pro_m_count1,dnp_count1,n= col_height(pro_count,pro_m_count,dnp_count,excl_count)
+    excl_count1 = (excl_count)/n
 
-    for height_rec in (pro_count,pro_m_count,dnp_count,excl_count):
-        n = col_height(pro_count,pro_m_count,dnp_count,excl_count)
+    for height_rec in (pro_count1,pro_m_count1,dnp_count1,excl_count1) :
         col_colours(place)
-        rectangle(place,height_rec/n)
+        rectangle(place,height_rec)
         sub_title = sub_titles[place-1]
         subTitle()
         place += 1
