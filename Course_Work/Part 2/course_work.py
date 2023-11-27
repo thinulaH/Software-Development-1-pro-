@@ -1,6 +1,6 @@
 from graphics import *
 
-#Input value and checking the input value in range and is an integer
+#Input value and checking wether in range or adding an integer
 def input_cred(cred_name,credits) :
     while True:
         try:
@@ -36,13 +36,13 @@ def col_height(pro_count,pro_m_count,dnp_count,excl_count) :
 #making columns
 def rectangle(place,height_rec) :
     r, g, b = col_colours(place)
-    x1,x2 = (80+(place*110)),(175+(place*110))
+    x1,x2 = (80+(place*110)), (175+(place*110))
     y1 = 500
     y2 = y1 - (80*(height_rec/n))
     rectangle1 = Rectangle(Point(x1,y1),Point(x2,y2))
     rectangle1.setFill(color_rgb(r,g,b))
-    rectangle1.setOutline(color= "Black")
-    rectangle1.setWidth(0.5)
+    rectangle1.setOutline(color= "Black" )
+    rectangle1.setWidth(1)
     rectangle1.draw(Win)
     return x1,x2,y1,y2
 
@@ -89,20 +89,40 @@ while want_to_continue == 'y' :
         if Total == 120:
             break
         else:
-            print('Total incorrect. ')
+            while Total != 120:
+                print('Total incorrect. ')
+                change = input("Do you want to change one credit (Enter 'c') or all credits (Enter 'a') ?  ")
+                if change == 'a':
+                    cred_pass  = int(input_cred('PASS ',credits))
+                    cred_defer = int(input_cred('DEFER',credits))
+                    cred_fail  = int(input_cred('FAIL ',credits))
+
+                elif change == 'c':
+                    print("For change \n    PASS credits  - 'p'\n    DEFER credits - 'd'\n    FAIL credits  - 'f' ")
+                    change_cred = input("What input do you want to change ? :")
+                    if change_cred == 'p':
+                        cred_pass  = int(input_cred('PASS ',credits))
+                    elif change_cred == 'd':
+                        cred_defer = cred_defer = int(input_cred('DEFER',credits))
+                    elif change_cred == 'f':
+                        cred_fail  = int(input_cred('FAIL ',credits))
+                Total = cred_defer+cred_fail+cred_pass
+                if Total == 120:
+                    break
+            break
 
     if cred_pass == 120:
         prog_out = 'Progress'
         pro_count += 1
-    elif cred_pass == 100:
+    if cred_pass == 100:
         prog_out = 'Progress (module trailer)'
         pro_m_count += 1
-    elif (cred_fail in [80,100,120]):
-        prog_out = 'Exclude'
-        excl_count += 1
-    else:
+    if (cred_pass in [80,60]) or (cred_pass==40 and (cred_defer in [80,60,40,20])) or (cred_pass ==20 and cred_defer in[100,80,60,40]) or (cred_pass == 0 and cred_defer in [120,100,80,60]):
         prog_out = 'Do not progress - module retriever'
         dnp_count += 1
+    if (cred_fail in [80,100,120]):
+        prog_out = 'Exclude'
+        excl_count += 1
 
     print(prog_out,'\n')
     print('Would you like to enter another set of data?')
@@ -112,14 +132,14 @@ while want_to_continue == 'y' :
     print()
 
 if want_to_continue == 'q' :
-    #display histogram
     Win = GraphWin("histogram", 805, 600)
     Win.setBackground(color_rgb(237,242,236))
     linex = Line(Point(150,500),Point(650,500))
     tot_outcomes = pro_count + pro_m_count + dnp_count + excl_count
     total = str(tot_outcomes)+" outcomes in total."
     title()
-    #display columns
+    col_height(pro_count,pro_m_count,dnp_count,excl_count)
+
     for height_rec in (pro_count,pro_m_count,dnp_count,excl_count):
         n = col_height(pro_count,pro_m_count,dnp_count,excl_count)
         col_colours(place)
