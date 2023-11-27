@@ -14,21 +14,21 @@ def input_cred(cred_name,credits) :
 
 #column colours
 def col_colours(place) :
-    if place == 1:
+    if   place == 1 :
         r,g,b = 169,150,180
     elif place == 2 :
         r,g,b = 184,217,180
     elif place == 3 :
         r,g,b = 132,171,180
     elif place == 4 :
-        r,g,b, = 232,145,155
+        r,g,b = 232,145,155
     return r,g,b 
 
 #column height adjestment
 def col_height(pro_count,pro_m_count,dnp_count,excl_count) :
     vals = [pro_count,pro_m_count,dnp_count,excl_count]
     n = 1
-    while any(val*80/n > 400 for val in vals ) :
+    while any(val*80/n > 400 for val in vals) :
             n += 0.2
     #https://www.programiz.com/python-programming/methods/built-in/any (any() function: works similar as 'or')
     return n
