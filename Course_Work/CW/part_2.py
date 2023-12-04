@@ -77,8 +77,9 @@ height_rec = 0
 tot_outcomes = 0
 place = 1 
 want_to_continue = 'y'
-sub_titles = ["Progress","Trailer","Retriver","Excluded"]
+sub_titles = ("Progress","Trailer","Retriver","Excluded")
 credits = [0,20,40,60,80,100,120]
+list_out = []
 
 while want_to_continue == 'y' :
     while True :
@@ -103,11 +104,15 @@ while want_to_continue == 'y' :
     else:
         prog_out = 'Do not progress - module retriever'
         dnp_count += 1
-
+    
+    list_in = [prog_out, cred_pass, cred_defer, cred_fail]
+    if  list_in[0] == 'Do not progress - module retriever' :
+        list_in[0] = 'Module retriever'
+    list_out.append(list_in)
+    
     print(prog_out,'\n')
-    print('Would you like to enter another set of data?')
-    want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")
-    while want_to_continue not in ('y','q'):
+    want_to_continue = input("Would you like to enter another set of data? \nEnter 'y' for yes or 'q' to quit and view results: ")
+    while want_to_continue not in ['y','q']:
         want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")   
     print()
 
@@ -115,7 +120,7 @@ if want_to_continue == 'q' :
     #display histogram
     Win = GraphWin("histogram", 805, 600)
     Win.setBackground(color_rgb(237,242,236))
-    linex = Line(Point(150,500),Point(650,500))
+    linex = Line(Point(150,500),Point(655,500))
     tot_outcomes = pro_count + pro_m_count + dnp_count + excl_count
     total = str(tot_outcomes)+" outcomes in total."
     title()
@@ -131,3 +136,9 @@ if want_to_continue == 'q' :
     linex.draw(Win)
     Win.getMouse()
     Win.close()
+    
+    #print list
+    print('Part 2:')
+    for list_in in list_out :
+        print(f"{list_in[0]} - {list_in[1]}, {list_in[2]}, {list_in[3]}")
+    print()
