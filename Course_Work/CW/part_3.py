@@ -1,5 +1,7 @@
 from graphics import *
 
+txt_file = open("progression_data.txt","w")
+
 #Input value and checking the input value in range and is an integer
 def input_cred(cred_name,credits) :
     while True:
@@ -77,7 +79,7 @@ height_rec = 0
 tot_outcomes = 0
 place = 1 
 want_to_continue = 'y'
-sub_titles = ["Progress","Trailer","Retriver","Excluded"]
+sub_titles = ("Progress","Trailer","Retriver","Excluded")
 credits = [0,20,40,60,80,100,120]
 
 while want_to_continue == 'y' :
@@ -105,13 +107,19 @@ while want_to_continue == 'y' :
         dnp_count += 1
 
     print(prog_out,'\n')
+    if prog_out == 'Do not progress - module retriever':
+        prog_out = 'Module retriever'
+    txt_file.write(f"{prog_out} - {cred_pass}, {cred_defer}, {cred_fail}\n")
+
+    
     print('Would you like to enter another set of data?')
     want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")
-    while want_to_continue not in ('y','q'):
+    while want_to_continue not in ['y','q']:
         want_to_continue = input("Enter 'y' for yes or 'q' to quit and view results: ")   
     print()
 
 if want_to_continue == 'q' :
+    txt_file.close()
     #display histogram
     Win = GraphWin("histogram", 805, 600)
     Win.setBackground(color_rgb(237,242,236))
@@ -131,3 +139,10 @@ if want_to_continue == 'q' :
     linex.draw(Win)
     Win.getMouse()
     Win.close()
+
+    #print text file
+    txt_file_read = open("progression_data.txt","r")
+    data = txt_file_read.read()
+    txt_file_read.close()
+    print("Part 3:")
+    print(data)
