@@ -79,9 +79,9 @@ height_rec = 0
 tot_outcomes = 0
 place = 1 
 want_to_continue = 'y'
-sub_titles = ("Progress","Trailer","Retriver","Excluded")
+sub_titles = ('Progress','Trailer','Retriver','Excluded')
 credits = [0,20,40,60,80,100,120]
-
+print()
 while want_to_continue == 'y' :
     while True :
         cred_pass  = int(input_cred('PASS ',credits))
@@ -121,11 +121,11 @@ while want_to_continue == 'y' :
 if want_to_continue == 'q' :
     txt_file.close()
     #display histogram
-    Win = GraphWin("histogram", 805, 600)
+    Win = GraphWin('histogram', 805, 600)
     Win.setBackground(color_rgb(237,242,236))
     linex = Line(Point(150,500),Point(650,500))
     tot_outcomes = pro_count + pro_m_count + dnp_count + excl_count
-    total = str(tot_outcomes)+" outcomes in total."
+    total = str(tot_outcomes)+' outcomes in total.'
     title()
     #display columns
     for height_rec in (pro_count,pro_m_count,dnp_count,excl_count):
@@ -144,5 +144,5 @@ if want_to_continue == 'q' :
     txt_file_read = open("progression_data.txt","r")
     data = txt_file_read.read()
     txt_file_read.close()
-    print("Part 3:")
+    print('Part 3:')
     print(data)
